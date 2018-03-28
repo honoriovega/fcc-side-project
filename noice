@@ -1,0 +1,2 @@
+git remote add origin https://github.com/honoriovega/fcc-side-project.git
+git push -u origin master
