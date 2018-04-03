@@ -14,13 +14,11 @@ class StudentTable extends Component {
             username={student.username}
             completedChallenges={student.completedChallenges}
             profileImage={student.profileImage}
-            remove={student.remove}
+            removeStudent={this.props.remove}
+            studentIndex={index}
         />
       ));
     });
-
-
-
     return rows;
   }
 
