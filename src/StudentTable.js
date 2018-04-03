@@ -19,12 +19,24 @@ class StudentTable extends Component {
       ));
     });
 
+
+
     return rows;
+  }
+
+
+  displayStudentCount() {
+    const studentCount = this.props.students.length;
+    const msg = `Displaying ${studentCount} student${studentCount == 1 ? '' : 's'}`
+    return(<h2>{msg}</h2>);
+
   }
 
   showTable() {
     return (
 
+    <div>
+      {this.displayStudentCount()}
       <table className="students table text-center">
           <thead>
             <tr>
@@ -39,6 +51,8 @@ class StudentTable extends Component {
             {this.populateStudents()}
           </tbody>
         </table>
+
+        </div>
       );
   }
 
