@@ -17,6 +17,15 @@ class App extends Component {
                 };
 
     this.addStudent = this.addStudent.bind(this);
+    this.removeStudent = this.removeStudent.bind(this);
+  }
+
+
+  removeStudent(index) {
+    var temp = [...this.state.students];
+    temp.splice(index, 1);
+    this.setState({students : temp});
+
   }
 
   addStudent(searchTerm) {
@@ -28,8 +37,7 @@ class App extends Component {
               return response.json();
             } else {
               this.setState({errors : `User "${searchTerm}" not found`})
-              console.log(response);
-
+            throw new Error('user not found');
             }
           })
           .then(data => {
@@ -46,16 +54,10 @@ class App extends Component {
 
             temp.push(newUser);
 
-            newUser['remove'] =  () =>{
-                      var index = this.state.students.indexOf(newUser);
-                      var temp = [...this.state.students];
-                      temp.splice(index, 1);
-                      this.setState({students : temp});
-
-            }
-
-
-             this.setState({students : temp});
+            this.setState({students : temp});
+          })
+          .catch((error) => {
+              console.log(error)
           });
   }
 
@@ -65,7 +67,8 @@ class App extends Component {
         <center><h1>FreeCodeCamp Student Search</h1></center>
         <Form handleTheChange={this.addStudent.bind(this)}/>
         <p>{this.state.errors == '' ? '' : this.state.errors} </p>
-         <StudentTable students={this.state.students}/>
+         <StudentTable students={this.state.students}
+                      remove={this.removeStudent.bind(this)}/>
 
       </div>
      );

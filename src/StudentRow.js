@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 
 class StudentRow extends Component {
 
-  handleClicker() {
-    alert('thou has been clicked');
+
+  constructor(props) {
+        super(props);
+        this.removeStudent = this.removeStudent.bind(this);
+  }
+
+  removeStudent() {
+    this.props.removeStudent(this.props.studentIndex);
   }
 
   render() {
@@ -13,7 +19,7 @@ class StudentRow extends Component {
         <td>{this.props.username}</td>
         <td><img src={this.props.profileImage}></img></td>
         <td>{this.props.completedChallenges}</td>
-        <td><button onClick={this.props.remove}>Remove</button></td>
+        <td><button onClick={this.removeStudent}>Remove</button></td>
       </tr>
     );
   }
