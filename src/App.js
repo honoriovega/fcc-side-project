@@ -22,13 +22,23 @@ class App extends Component {
 
 
   removeStudent(index) {
-    var temp = [...this.state.students];
+    this.setState({errors : ''})
+    let temp = [...this.state.students];
     temp.splice(index, 1);
     this.setState({students : temp});
 
   }
 
   addStudent(searchTerm) {
+
+    for(let i = 0; i < this.state.students.length; i++) {
+      if(this.state.students[i].username === searchTerm) {
+        this.setState({errors : searchTerm + ' already exists in table'})
+        return;
+      }
+    }
+
+    this.setState({errors : ''})
 
     fetch('https://fcc-profile-scraper.herokuapp.com/user/' + searchTerm)
           .then(response => {
@@ -42,9 +52,8 @@ class App extends Component {
           })
           .then(data => {
 
-            var temp = this.state.students;
           // build up the student object
-            var newUser = {
+            const newUser = {
               'username' : searchTerm,
               'name' : data['name'],
               'profileImage' : data['profileImage'],
@@ -52,9 +61,7 @@ class App extends Component {
 
             };
 
-            temp.push(newUser);
-
-            this.setState({students : temp});
+             this.setState({students : [...this.state.students, newUser]});
           })
           .catch((error) => {
               console.log(error)
