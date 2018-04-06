@@ -31,6 +31,10 @@ class App extends Component {
 
   addStudent(searchTerm) {
 
+   // check for duplicate user, this is inneficient since it looks
+   // through all students , worst case complexity O(n)
+   // a better approach would use a hashset and check if students
+   // exists, lookup would be O(1)
     for(let i = 0; i < this.state.students.length; i++) {
       if(this.state.students[i].username === searchTerm) {
         this.setState({errors : searchTerm + ' already exists in table'})
@@ -47,7 +51,7 @@ class App extends Component {
               return response.json();
             } else {
               this.setState({errors : `User "${searchTerm}" not found`})
-            throw new Error('user not found');
+              throw new Error('user not found');
             }
           })
           .then(data => {
